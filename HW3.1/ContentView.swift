@@ -21,6 +21,26 @@ struct ContentView: View {
     @State private var yellowLightState = 0.3
     @State private var greenLightState = 0.3
     
+    private func updateColor() {
+        let lightIsOn = 1.0
+        let lightIsOff = 0.3
+        
+        switch currentLight {
+        case .red:
+            currentLight = .yellow
+            greenLightState = lightIsOff
+            redLightState = lightIsOn
+        case .yellow:
+            currentLight = .green
+            redLightState = lightIsOff
+            yellowLightState = lightIsOn
+        case .green:
+            currentLight = .red
+            yellowLightState = lightIsOff
+            greenLightState = lightIsOn
+        }
+    }
+    
     var body: some View {
         ZStack {
             Color(.black)
@@ -34,24 +54,7 @@ struct ContentView: View {
                     if buttonTitle == "START" {
                         buttonTitle = "NEXT"
                     }
-                    
-                    let lightIsOn = 1.0
-                    let lightIsOff = 0.3
-                    
-                    switch currentLight {
-                    case .red:
-                        currentLight = .yellow
-                        greenLightState = lightIsOff
-                        redLightState = lightIsOn
-                    case .yellow:
-                        currentLight = .green
-                        redLightState = lightIsOff
-                        yellowLightState = lightIsOn
-                    case .green:
-                        currentLight = .red
-                        yellowLightState = lightIsOff
-                        greenLightState = lightIsOn
-                    }
+                    updateColor() 
                 }
             }
             .padding(.bottom)
